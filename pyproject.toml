@@ -12,7 +12,11 @@ license = {text = "Apache-2.0"}
 dependencies = []
 
 [project.scripts]
+researchos = "researchos.__main__:main"
 nettop = "nettop.__main__:main"
 
 [tool.setuptools.packages.find]
-include = ["nettop*"]
+include = ["nettop*", "researchos*"]
+
+[tool.setuptools.package-data]
+researchos = ["*.json"]

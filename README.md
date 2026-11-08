@@ -96,3 +96,7 @@ python -m unittest discover -s tests -v
 The 15 tests cover known graph distances, cut detection against node/edge removal on **all 64 simple four-node graphs**, clique homology with dependent triangle boundaries, mean preservation, disconnected averaging, fixed-membership quorum behavior, invalid input, CLI reports, and DOT escaping. CI installs the package and runs the tests and examples on Python 3.10, 3.12, and 3.13.
 
 Licensed under Apache 2.0; see [LICENSE](LICENSE).
+
+## ResearchOS / TECT assurance layer
+
+This repository includes the shared v0.1 research controller, a scoped executable domain pilot, replayable evidence/decision bundles, adversarial regression probes, and explicit unassured outcomes. See [the workflow](docs/RESEARCHOS.md), [versioned semantics](docs/TECT_SPEC.md), and [research-program traceability](docs/TECT_RESEARCH_PLAN.md). Existing domain results retain their documented limits. No claim state authorizes external or clinical execution.
