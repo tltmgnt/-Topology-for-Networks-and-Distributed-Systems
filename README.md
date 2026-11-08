@@ -28,3 +28,7 @@ Input uses strict JSON, rejects duplicate keys and nonfinite values, limits size
 A scoped executable domain adapter feeds the shared, versioned controller. The pilot remains unassured when evidence is missing. [Workflow](docs/RESEARCHOS.md), [semantics](docs/TECT_SPEC.md), [research plan](docs/TECT_RESEARCH_PLAN.md), and [concept paper](docs/researchos/TECT_WHITE_PAPER.md). The shared implementation is governed by the canonical ResearchOs release manifest; local copies are conformance-checked rather than independently evolved.
 
 No report grants clinical, financial, equipment or deployment authority. Original Apache-2.0 license retained.
+
+## Portfolio implementation boundary
+
+See [current implementation and shared-core integration](docs/portfolio/INTEGRATION.md) and [machine-readable status](docs/portfolio/STATUS.json). Independent empirical reproduction and real-provider acceptance remain separate from software checks.
