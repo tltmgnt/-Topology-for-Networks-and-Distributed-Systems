@@ -1,0 +1,17 @@
+[build-system]
+requires=["setuptools>=61"]
+build-backend="setuptools.build_meta"
+[project]
+name="network-topology"
+version="0.1.0"
+requires-python=">=3.10"
+description="Synchronous network failure analysis with replayable research evidence"
+readme="README.md"
+license={text="Apache-2.0"}
+[project.scripts]
+network-topology="network_topology.__main__:main"
+researchos="researchos.__main__:main"
+[tool.setuptools.packages.find]
+include=["network_topology*","researchos*"]
+[tool.setuptools.package-data]
+researchos=["*.json"]
