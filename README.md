@@ -1,5 +1,14 @@
 # Synchronous network failure analysis
 
+<!-- research-workbench:start -->
+## Research workbench
+
+[Open this repository's private workbench](https://tltmgnt-topology-for-networks-and-distributed-systems.troturn31.chatgpt.site) · [All repository workbenches](https://tltmgnt-research-workbenches.troturn31.chatgpt.site)
+
+The hosted interface requires ChatGPT sign-in and access to the private Site. It supports browser-local research records, evidence fingerprints and workspace export. It is a prototype: no live AI model or repository backend is connected, and it does not establish external validation.
+<!-- research-workbench:end -->
+
+
 Working offline Python research prototype. **Directed synchronous min-flooding for at most 12 nodes and 32 edges. Reliable links deliver messages every round. Enumerate baseline and optionally every single pre-start node/edge outage; simulate n-1 rounds and compare to an independent reachability oracle. No asynchronous consensus theorem, runtime crash recovery, Byzantine faults or deployment.**
 
 ## Run
