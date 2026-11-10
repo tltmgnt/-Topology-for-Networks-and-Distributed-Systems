@@ -1,6 +1,6 @@
 # Topology compatibility and curriculum v2 — -Topology-for-Networks-and-Distributed-Systems
 
-Version 2 adapts the explicit-molecular-graph teaching pattern to this repository's actual role. This is documentation and a learning/decision framework; it introduces no mathematical engine, runtime dependency or operational permission.
+The verified edition of version 2 adapts the explicit-molecular-graph teaching pattern to this repository's actual role. This edition adds executable learning checks and reviewed answer keys. It does not introduce a new topology engine or grant operational permission.
 
 ## Repository decision
 
@@ -40,62 +40,55 @@ Prerequisites: basic programming, sets, functions and graph vocabulary. Work in 
 | 5. Comparison | Justify mathematical necessity and cost. | Complete the six-criterion card for the existing approach and one proposed alternative; record unknowns honestly. | Evidence-backed recommendation with baseline and explicit veto conditions. |
 | 6. Reproduction | Communicate the bounded result. | Reproduce the capstone using existing offline fixtures and record software version, inputs, outputs and limitations. | Reviewable notebook or report distinguishing computation, replay, independent evaluation and authorization. |
 
-## Source-linked reading laboratory
+## Worked reasoning and source explanation
 
-The table is a guided selection of source lines, not an assertion that the whole repository is covered. Line numbers refer to the inspected source blob `ea93848bc48fa36512fb9fa6e3aed0c2d47295ff` in [network_topology/analysis.py](../../network_topology/analysis.py). Recheck anchors after source changes.
+On a→b→c, initial values 3,2,1 already equal each node's incoming reachable minimum, so no agreement results. With 0,1,2, the minimum travels forward in two rounds and all nodes end at zero. The graph is unchanged and remains not strongly connected. Thus one value assignment's agreement does not prove consensus for every assignment. The reachable() oracle and synchronous message history must agree within the declared failure model.
 
-| Line | Statement | Learning check |
+Read the [inspected source](https://github.com/tltmgnt/-Topology-for-Networks-and-Distributed-Systems/blob/ff01ae082118f3a73d46615d9aeea1374bd399c0/network_topology/analysis.py) alongside the [executable answer key](../../curriculum/lab.py). The source link is pinned to the inspected revision; the lab and any explicitly described fix are in this change.
+
+## Run the worked laboratory
+
+From the repository root, with Python 3.12 (the recorded local version is 3.12.14):
+
+```sh
+python curriculum/lab.py --verify
+```
+
+The lab checks **7 explicit expectations** against existing repository functions. It prints a JSON case report and exits nonzero on a wrong result. `--verify` additionally compares the entire case report with [expected.json](../../curriculum/expected.json). Read the input and predict each result before opening the answer key. No API account, credentials, model download, trading action or equipment connection is needed.
+
+| Checkpoint | Expected answer |
+| --- | --- |
+| minimum cannot flow backwards | `{"a": 3, "b": 2, "c": 1}` |
+| directed chain can disagree | `"FAIL"` |
+| smallest upstream value reaches all | `{"a": 0, "b": 0, "c": 0}` |
+| agreement is value-dependent | `"PASS"` |
+| agreement is not strong connectivity | `false` |
+| duplicate directed edge | `"ValueError"` |
+| no deployment authority | `false` |
+
+The comparisons above encode independently specified small examples and contract expectations; a passing answer key is not evidence of complete domain correctness. The original functions and their existing test suites remain the authority for broader supported contracts.
+
+## Learner tasks and assessment rubric
+
+1. Before running the lab, predict every expected answer and derive one numeric result or state transition by hand.
+2. Explain the worked reasoning above using the referenced source, including the rejected or counterexample case.
+3. Add a new valid example and a nearby failing example. Explain which assumption changes, then compare against the existing implementation. For concept/static labs, keep the result explicitly at that level.
+4. Complete the scorecard for a proposed extension and a simpler baseline. Leave measurements unknown until collected; a task that the baseline already solves is not evidence for additional topology.
+
+| Competency | Points | Full-credit evidence |
 | --- | --- | --- |
-| [1](../../network_topology/analysis.py#L1) | `"""Bounded synchronous min-flooding with static node/edge failure scenarios."""` | Explain the stated scope and identify a claim the implementation does not establish. |
-| [3](../../network_topology/analysis.py#L3) | `def reachable(start,nodes,edges):` | State the input/output contract and trace one normal and one failing case. |
-| [4](../../network_topology/analysis.py#L4) | `found={start};pending=[start]` | Trace discovery order and state the reachability or shortest-path invariant. |
-| [5](../../network_topology/analysis.py#L5) | `while pending:` | Trace discovery order and state the reachability or shortest-path invariant. |
-| [6](../../network_topology/analysis.py#L6) | `node=pending.pop()` | Trace discovery order and state the reachability or shortest-path invariant. |
-| [7](../../network_topology/analysis.py#L7) | `for a,b in edges:` | Draw the represented relation; identify direction, multiplicity and edge labels. |
-| [8](../../network_topology/analysis.py#L8) | `if a==node and b not in found:found.add(b);pending.append(b)` | Trace discovery order and state the reachability or shortest-path invariant. |
-| [9](../../network_topology/analysis.py#L9) | `return found` | Predict the returned value and distinguish a computed result from authorization. |
-| [12](../../network_topology/analysis.py#L12) | `def analyze(data):` | State the input/output contract and trace one normal and one failing case. |
-| [13](../../network_topology/analysis.py#L13) | `if not isinstance(data,dict) or set(data)!={'schema_version','nodes','edges','initial','failure_budget'} or type(data['schema_version']) is not int or data['schema_version']!=1:raise ValueError('exact network schema_version 1 required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [14](../../network_topology/analysis.py#L14) | `nodes,edges,initial=data['nodes'],data['edges'],data['initial']` | Draw the represented relation; identify direction, multiplicity and edge labels. |
-| [15](../../network_topology/analysis.py#L15) | `if not isinstance(nodes,list) or not 1<=len(nodes)<=12 or any(not isinstance(n,str) or not n or len(n)>32 for n in nodes) or len(set(nodes))!=len(nodes):raise ValueError('1..12 unique node IDs required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [16](../../network_topology/analysis.py#L16) | `if not isinstance(edges,list) or len(edges)>32 or any(not isinstance(e,list) or len(e)!=2 or any(n not in nodes for n in e) or e[0]==e[1] for e in edges):raise ValueError('at most 32 directed non-self edges required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [17](../../network_topology/analysis.py#L17) | `if len({tuple(e) for e in edges})!=len(edges):raise ValueError('duplicate edge')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [18](../../network_topology/analysis.py#L18) | `if not isinstance(initial,dict) or set(initial)!=set(nodes) or any(type(v) is not int or abs(v)>1000000 for v in initial.values()):raise ValueError('bounded integer initial values for every node required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [19](../../network_topology/analysis.py#L19) | `if type(data['failure_budget']) is not int or data['failure_budget'] not in (0,1):raise ValueError('failure_budget must be 0 or 1')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [20](../../network_topology/analysis.py#L20) | `nodes=sorted(nodes);edges=sorted(tuple(e) for e in edges)` | Draw the represented relation; identify direction, multiplicity and edge labels. |
-| [21](../../network_topology/analysis.py#L21) | `scenarios=[('baseline',None,None)]` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [22](../../network_topology/analysis.py#L22) | `if data['failure_budget']:` | Trace both branches and identify the condition that changes the result. |
-| [23](../../network_topology/analysis.py#L23) | `scenarios += [('node:'+n,n,None) for n in nodes]` | State the loop invariant, termination argument and one boundary case. |
-| [24](../../network_topology/analysis.py#L24) | `scenarios += [('edge:'+a+'->'+b,None,(a,b)) for a,b in edges]` | Draw the represented relation; identify direction, multiplicity and edge labels. |
-| [25](../../network_topology/analysis.py#L25) | `results=[]` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [26](../../network_topology/analysis.py#L26) | `for label,removed_node,removed_edge in scenarios:` | State the loop invariant, termination argument and one boundary case. |
-| [27](../../network_topology/analysis.py#L27) | `active=[n for n in nodes if n!=removed_node]` | State the loop invariant, termination argument and one boundary case. |
-| [28](../../network_topology/analysis.py#L28) | `links=[e for e in edges if removed_node not in e and e!=removed_edge]` | Draw the represented relation; identify direction, multiplicity and edge labels. |
-| [29](../../network_topology/analysis.py#L29) | `values={n:initial[n] for n in active};history=[dict(values)];messages=0` | State the loop invariant, termination argument and one boundary case. |
-| [30](../../network_topology/analysis.py#L30) | `for _ in range(max(0,len(active)-1)):` | State the loop invariant, termination argument and one boundary case. |
-| [31](../../network_topology/analysis.py#L31) | `next_values=dict(values)` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [32](../../network_topology/analysis.py#L32) | `for a,b in links:next_values[b]=min(next_values[b],values[a]);messages+=1` | State the loop invariant, termination argument and one boundary case. |
-| [33](../../network_topology/analysis.py#L33) | `values=next_values;history.append(dict(values))` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [34](../../network_topology/analysis.py#L34) | `expected={n:min(initial[s] for s in active if n in reachable(s,active,links)) for n in active}` | Trace discovery order and state the reachability or shortest-path invariant. |
-| [35](../../network_topology/analysis.py#L35) | `if values!=expected:raise ValueError('independent reachability oracle mismatch')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [36](../../network_topology/analysis.py#L36) | `agreement=bool(active) and len(set(values.values()))==1` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [37](../../network_topology/analysis.py#L37) | `results.append({'scenario':label,'active_nodes':active,'final':values,'oracle':expected,'agreement':agreement,` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [38](../../network_topology/analysis.py#L38) | `'not_applicable':not active,'rounds':max(0,len(active)-1),'messages':messages,'history':history,` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [39](../../network_topology/analysis.py#L39) | `'strongly_connected':bool(active) and all(len(reachable(n,active,links))==len(active) for n in active)})` | Trace discovery order and state the reachability or shortest-path invariant. |
-| [40](../../network_topology/analysis.py#L40) | `failures=[r['scenario'] for r in results if not r['agreement'] and not r['not_applicable']]` | State the loop invariant, termination argument and one boundary case. |
-| [41](../../network_topology/analysis.py#L41) | `return {'schema_version':1,'domain':'networks','status':'FAIL' if failures else 'PASS','scenarios':results,'agreement_failures':failures,` | Separate type, shape and value checks; test a missing field and an invalid value. |
-| [42](../../network_topology/analysis.py#L42) | `'execution_authorized':False,` | Explain the statement, track its state change and predict its effect on the worked example. |
-| [43](../../network_topology/analysis.py#L43) | `'scope':'Synchronous reliable directed links; only one static pre-start node or edge outage at a time. Min of reachable initial values after n-1 rounds. No asynchronous, Byzantine, delay, crash-during-run, deployment or general consensus-solvability claim.'}` | Trace discovery order and state the reachability or shortest-path invariant. |
-## Assessment and verification
+| Model and contract | 0–3 | Correct objects, relation direction, labels/units, input bounds and missingness. |
+| Derivation and trace | 0–3 | Hand derivation agrees with the specified fixture; source steps explain why. |
+| Counterexample | 0–3 | New failing/boundary case has a justified expected result; rejection is not suppressed. |
+| Scope and necessity | 0–3 | Distinguishes software behavior from validation and compares an explicit simpler alternative. |
 
-A learner must explain the model, trace the capstone, identify a counterexample and state the scope boundary. Assess these four competencies equally; a numerical score cannot compensate for an unsupported scientific or operational claim.
+Completion requires at least 10/12 and no zero in scope/necessity. A runnable answer key alone is not evidence that a learner achieved this competency. No learner-outcome study has been performed.
 
-Relevant existing checks:
+## Verification evidence and maintenance
 
-- [tests/test_domain.py](../../tests/test_domain.py)
-- [tests/test_researchos.py](../../tests/test_researchos.py)
+[VALIDATION.json](../../curriculum/VALIDATION.json) records the inspected base revision, local Python version, source/fixture hashes, lab/answer hashes, case count and exit codes. All cases were executed locally. An in-memory copy with a deliberately wrong comparison was also executed and returned nonzero, checking that the grading failure path is active. Those injected failures are harness checks, not scientific adversarial evaluations.
 
-Follow [README](../../README.md) for environment and installed-package instructions. Read scripts before execution; source-reading exercises do not authorize provider calls, model downloads, live orders, hardware actions or messages. Synthetic fixtures establish software behavior only. This documentation change does not report those exercises as already executed.
+The dedicated [curriculum workflow](../../.github/workflows/curriculum.yml) runs the same `--verify` command on relevant pull-request changes. CI status is reported by GitHub; the local record does not assert that remote CI passed. Existing full-suite and installed-package requirements still apply to runtime changes. When source or fixture semantics change, inspect the diff and rederive answers before updating expected.json. Never regenerate expected answers solely to silence a failure. Refresh the local validation record after an actual run; do not rewrite its recorded base revision as if a new run occurred.
 
 ## Interoperability and adoption gate
 
