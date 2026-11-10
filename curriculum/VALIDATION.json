@@ -1,0 +1,20 @@
+{
+  "case_count": 7,
+  "command": "python curriculum/lab.py --verify",
+  "exit_code": 0,
+  "expected_sha256": "a246dea61fed8b885d29feebc25595b48af4955e283fc4398bc9ace357ae0dcc",
+  "lab_sha256": "600f0fc2c086afdb57b651cb14c3fd33f7078a0565792672f85ecf1f2dc5aa38",
+  "python": "3.12.14",
+  "repository": "tltmgnt/-Topology-for-Networks-and-Distributed-Systems",
+  "schema_version": 1,
+  "scope": "Local synthetic curriculum validation on the recorded source snapshot; not complete repository CI, learning outcomes, independent scientific reproduction or deployment approval",
+  "source_and_fixture_sha256": {
+    "examples/reference.json": "51c7562a6664bb89afe39adf61c248978763f9a6e793784c3577506db53d87e1",
+    "network_topology/__init__.py": "05baed2df9049e35b18a337767aa93645965c5dca56eadcef51e9f0331954186",
+    "network_topology/__main__.py": "074f8a2b6e016acb5e9bde12809ff6652b45f06bfc802eb784ae9160e97282ac",
+    "network_topology/analysis.py": "ddfb46243294fc0b82630ab37a8ea79726d1071d02142ce110144fcd15a518b2",
+    "network_topology/io.py": "a2c9daca91107ad0dc0996d0fcdc53c0d288fb7f6b96508a9d75a257216bfb02"
+  },
+  "source_base_commit": "ff01ae082118f3a73d46615d9aeea1374bd399c0",
+  "wrong_expectation_exit_code": 1
+}
