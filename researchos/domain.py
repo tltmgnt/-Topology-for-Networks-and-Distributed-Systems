@@ -1,11 +1,8 @@
-"""Scoped synthetic domain adapter; no external execution."""
-from nettop import Network
+"""Executable synthetic domain adapter, not independent scientific reproduction."""
+from network_topology import analyze
+DATA={'schema_version': 1, 'nodes': ['a', 'b', 'c'], 'edges': [['a', 'b'], ['b', 'a'], ['a', 'c'], ['c', 'a'], ['b', 'c'], ['c', 'b']], 'initial': {'a': 3, 'b': 1, 'c': 2}, 'failure_budget': 1}
 
 def check():
-    network=Network(['a','b','c','d','e'],[['a','b'],['b','c'],['c','a'],['c','d'],['d','e']])
-    failure=network.failure_report(edges=[['c','d']])
-    observed=network.summary()
-    return {'domain':'networks','statement':'Removing the c-d bridge in the five-node fixture leaves only a,b,c with original-membership majority capacity.',
-            'passed':failure['majority_threshold']==3 and failure['majority_capable_components']==[['a','b','c']],
-            'configuration':{'nodes':list(network.nodes),'edges':[list(e) for e in network.edges],'failed_edges':[['c','d']]},
-            'observed':{'failure':failure,'topology':observed['topology']},'scope':'Static graph capacity; no consensus protocol liveness established'}
+    result=analyze(DATA)
+    return {'domain':result['domain'],'statement':'The supplied synthetic synchronous network failure analysis fixture satisfies its declared reference checks.','passed':bool(not result["agreement_failures"]),
+            'configuration':DATA,'observed':result,'scope':'Directed synchronous min-flooding for at most 12 nodes and 32 edges. Reliable links deliver messages every round. Enumerate baseline and optionally every single pre-start node/edge outage; simulate n-1 rounds and compare to an independent reachability oracle. No asynchronous consensus theorem, runtime crash recovery, Byzantine faults or deployment.'}
