@@ -1,5 +1,5 @@
 [build-system]
-requires=["setuptools>=61"]
+requires=["setuptools>=68"]
 build-backend="setuptools.build_meta"
 [project]
 name="network-topology"
@@ -9,9 +9,10 @@ description="Synchronous network failure analysis with replayable research evide
 readme="README.md"
 license={text="Apache-2.0"}
 [project.scripts]
+nettop="nettop.__main__:main"
 network-topology="network_topology.__main__:main"
 researchos="researchos.__main__:main"
 [tool.setuptools.packages.find]
-include=["network_topology*","researchos*"]
+include=["nettop*","network_topology*","researchos*"]
 [tool.setuptools.package-data]
 researchos=["*.json"]

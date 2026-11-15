@@ -33,3 +33,6 @@ jobs:
           path: runs/reference/
           retention-days: 7
           if-no-files-found: error
+      - run: nettop examples/partition.json --output output/report.json --dot output/network.dot
+      - run: nettop examples/ring.json --rounds 200
+      - run: python -c "from nettop.domain import check; assert check()['passed']"
